@@ -1,0 +1,412 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Matteo Leombroni</title>
+<meta name="description" content="Matteo Leombroni, Assistant Professor of Finance, Carroll School of Management, Boston College.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    color-scheme: light;         /* always white, even if the visitor's device is in dark mode */
+    --bg: #ffffff;
+    --surface: #ffffff;
+    --text: #1d1b19;
+    --muted: #6b655f;
+    --rule: #e6e1da;
+    --accent: #8a100b;          /* Boston College maroon */
+    --accent-soft: #f6ecea;
+    --chip-bg: #f1eeea;
+    --chip-text: #3d3935;
+    --shadow: 0 1px 2px rgba(0,0,0,.04), 0 4px 16px rgba(0,0,0,.05);
+    --serif: "Source Serif 4", Georgia, "Times New Roman", serif;
+    --sans: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+  }
+
+  * { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; }
+  body {
+    margin: 0; background: var(--bg); color: var(--text);
+    font-family: var(--serif); font-size: 18px; line-height: 1.55;
+  }
+  a { color: var(--accent); text-decoration: none; }
+  a:hover { text-decoration: underline; text-underline-offset: 3px; }
+  .wrap { max-width: 1040px; margin: 0 auto; padding: 0 24px; }
+
+  /* ---------- Header ---------- */
+  header.hero {
+    display: grid; grid-template-columns: 1fr 360px; gap: 48px; align-items: center;
+    padding: 64px 0 48px; border-bottom: 1px solid var(--rule);
+  }
+  .hero h1 { font-size: 46px; line-height: 1.1; font-weight: 600; margin: 0 0 14px; letter-spacing: -.01em; }
+  .hero .role { font-size: 20px; margin: 0; }
+  .hero .inst { color: var(--muted); margin: 2px 0 22px; }
+  .hero .links { display: flex; flex-wrap: wrap; gap: 10px; font-family: var(--sans); font-size: 14px; }
+  .hero .links a {
+    border: 1px solid var(--rule); background: var(--surface); color: var(--text);
+    padding: 7px 14px; border-radius: 999px; font-weight: 500;
+  }
+  .hero .links a:hover { border-color: var(--accent); color: var(--accent); text-decoration: none; }
+  .hero img { width: 100%; height: auto; aspect-ratio: 3/2; object-fit: cover; border-radius: 6px; box-shadow: var(--shadow); }
+
+  /* ---------- Sections ---------- */
+  section { padding: 40px 0 8px; }
+  .section-head { display: flex; align-items: baseline; justify-content: space-between; gap: 16px; margin-bottom: 8px; }
+  h2 {
+    font-family: var(--sans); font-size: 13px; font-weight: 500; letter-spacing: .12em;
+    text-transform: uppercase; color: var(--accent); margin: 0;
+  }
+  .toggle-all {
+    font-family: var(--sans); font-size: 13px; color: var(--muted); background: none;
+    border: none; cursor: pointer; padding: 4px 0;
+  }
+  .toggle-all:hover { color: var(--accent); }
+
+  /* ---------- Paper entry ---------- */
+  .paper { padding: 22px 0; border-bottom: 1px solid var(--rule); scroll-margin-top: 16px; }
+  .paper:last-child { border-bottom: none; }
+  .paper h3 { font-size: 21px; font-weight: 600; line-height: 1.3; margin: 0 0 4px; }
+  .paper h3 a { color: var(--text); }
+  .paper h3 a:hover { color: var(--accent); }
+  .authors { color: var(--muted); margin: 0; }
+  .venue { margin: 2px 0 0; font-style: italic; }
+  .venue .status { font-style: normal; }
+  .note { font-size: 15.5px; color: var(--muted); margin: 6px 0 0; }
+
+  .actions { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin-top: 12px; font-family: var(--sans); font-size: 13px; }
+  .abs-btn {
+    display: inline-flex; align-items: center; gap: 6px; cursor: pointer;
+    font: inherit; font-weight: 500; color: var(--accent); background: var(--accent-soft);
+    border: 1px solid transparent; border-radius: 6px; padding: 5px 11px;
+  }
+  .abs-btn:hover { border-color: var(--accent); }
+  .abs-btn svg { width: 12px; height: 12px; transition: transform .25s ease; }
+  .abs-btn[aria-expanded="true"] svg { transform: rotate(180deg); }
+  .chip {
+    color: var(--chip-text); background: var(--chip-bg); border-radius: 6px; padding: 5px 11px; font-weight: 500;
+  }
+  .chip:hover { color: var(--accent); text-decoration: none; }
+
+  /* Expanding panel: abstract left, key figure right */
+  .panel { display: grid; grid-template-rows: 0fr; transition: grid-template-rows .3s ease; }
+  .panel.open { grid-template-rows: 1fr; }
+  .panel > .inner { overflow: hidden; }
+  .panel-body {
+    display: grid; grid-template-columns: minmax(0, 1.45fr) minmax(0, 1fr); gap: 28px; align-items: center;
+    margin-top: 16px; padding: 22px 24px; background: var(--surface);
+    border: 1px solid var(--rule); border-radius: 8px; box-shadow: var(--shadow);
+  }
+  .panel-body.no-fig { grid-template-columns: 1fr; }
+  .abstract { font-size: 16.5px; line-height: 1.6; margin: 0; text-align: justify; hyphens: auto; }
+  figure { margin: 0; }
+  figure button { display: block; width: 100%; padding: 0; border: none; background: #fff; cursor: zoom-in; border-radius: 4px; }
+  figure img { display: block; width: 100%; height: auto; border-radius: 4px; }
+  figcaption { text-align: center; font-family: var(--sans); font-size: 12.5px; color: var(--muted); margin-top: 8px; line-height: 1.4; }
+
+  /* Lightbox */
+  dialog.lightbox {
+    border: none; padding: 0; background: #fff; border-radius: 6px; max-width: min(1200px, 94vw);
+    box-shadow: 0 10px 40px rgba(0,0,0,.35);
+  }
+  dialog.lightbox::backdrop { background: rgba(20,18,16,.75); }
+  dialog.lightbox img { display: block; max-width: 100%; max-height: 86vh; width: auto; height: auto; cursor: zoom-out; }
+  dialog.lightbox p { font-family: var(--sans); font-size: 13px; color: #555; margin: 0; padding: 10px 14px; }
+
+  footer { padding: 40px 0 56px; color: var(--muted); font-family: var(--sans); font-size: 13px; border-top: 1px solid var(--rule); margin-top: 32px; }
+
+  /* ---------- Small screens ---------- */
+  @media (max-width: 760px) {
+    body { font-size: 17px; }
+    .wrap { padding: 0 16px; }
+    header.hero { grid-template-columns: 1fr; gap: 24px; padding: 36px 0 32px; }
+    .hero img { order: -1; max-width: 420px; }
+    .hero h1 { font-size: 36px; }
+    .panel-body { grid-template-columns: 1fr; padding: 16px; gap: 18px; }
+    figure { max-width: 400px; margin: 0 auto; }
+    .abstract { text-align: left; }
+  }
+  @media (prefers-reduced-motion: reduce) { .panel, .abs-btn svg { transition: none; } }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="hero">
+    <div>
+      <h1>Matteo Leombroni</h1>
+      <p class="role">Assistant Professor of Finance</p>
+      <p class="inst">Carroll School of Management, Boston College</p>
+      <nav class="links">
+        <a href="https://matteoleombroni.github.io/Files/CV_MatteoLeombroni.pdf">Curriculum Vitae</a>
+      </nav>
+    </div>
+    <img src="img/photo.jpg" alt="Matteo Leombroni speaking at a conference" width="900" height="600">
+  </header>
+
+  <!--
+    HOW TO ADD A PAPER
+    Copy one <article class="paper"> block and edit it.
+      - id="..."           short unique name; also lets you link straight to the open abstract (matteoleombroni.com/#that-id)
+      - Abstract button    the page wires it up automatically, nothing to change
+      - Figure             put the image in figures/ and point <img src> at it.
+                           No figure? Delete the <figure> and add class "no-fig" to <div class="panel-body">.
+  -->
+
+  <section id="published">
+    <div class="section-head">
+      <h2>Published Papers</h2>
+      <button class="toggle-all" type="button">Show all abstracts</button>
+    </div>
+
+    <article class="paper" id="central-bank-communication">
+      <h3><a href="https://www.sciencedirect.com/science/article/abs/pii/S0304405X21001665">Central Bank Communication and the Yield Curve</a></h3>
+      <p class="authors">with Andrea Vedolin, Paul Whelan and Gyuri Venter</p>
+      <p class="venue">Journal of Financial Economics <span class="status">(2021)</span></p>
+      <div class="actions">
+        <button class="abs-btn" type="button">Abstract</button>
+        <a class="chip" href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=2873091">SSRN</a>
+        <a class="chip" href="https://www.sciencedirect.com/science/article/abs/pii/S0304405X21001665">JFE</a>
+      </div>
+      <div class="panel"><div class="inner"><div class="panel-body no-fig">
+        <p class="abstract">We decompose ECB monetary policy surprises into target and communication shocks and document a number of novel findings. First, consistent with the idea that concurrent implementation of monetary policy is largely anticipated, we find that target shocks only have a limited effect on yields. However, we show that communication shocks have a large and economically significant impact on swap rates and sovereign yields, displaying a hump-shaped pattern across maturity. Second, we document that around the European debt crisis communication had the effect of driving a wedge between yields on core versus peripheral countries. We study two explanations for this finding, revelation of the ECB's private information and credit risk, and argue that neither channel can explain the effect on yield spreads. Motivated by this, we consider an alternative explanation in which central bank communication can induce demand shocks for bonds due to the presence of reaching-for-yield investors. We show that a resulting risk premium channel helps to rationalize our findings.</p>
+      </div></div></div>
+    </article>
+
+    <article class="paper" id="wealth-inequality">
+      <h3><a href="https://matteoleombroni.github.io/Files/Duration.pdf">Financial and Total Wealth Inequality with Declining Interest Rates</a></h3>
+      <p class="authors">with Dan Greenwald, Hanno Lustig and Stijn Van Nieuwerburgh</p>
+      <p class="venue"><span class="status">Accepted,</span> Review of Economic Studies</p>
+      <div class="actions">
+        <button class="abs-btn" type="button">Abstract</button>
+        <a class="chip" href="https://matteoleombroni.github.io/Files/Duration.pdf">PDF</a>
+        <a class="chip" href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=3789220">SSRN</a>
+      </div>
+      <div class="panel"><div class="inner"><div class="panel-body">
+        <p class="abstract">US wealth inequality and long-term real interest rates exhibit a strong negative correlation over the post-war period. We quantify how much of the observed increase in wealth inequality from 1983 to 2023 can be accounted for by the decline in rates. To do so, we combine asset holdings data with asset exposures to interest rates to measure the exposure of households' portfolios to interest rates. The portfolios of the wealthy have higher interest rate exposure due to a tilt toward equity-like assets with long duration. As a result, wealth inequality increases when rates fall. When we feed in the observed path of real interest rates, we find that this revaluation effect explains the majority of the increase in measured wealth inequality over the past forty years.</p>
+        <figure>
+          <button type="button"><img src="figures/wealth-inequality.png" alt="Line chart: the top-10% wealth share moves closely with the price of a 10-year real bond, 1953 to 2023" loading="lazy"></button>
+          <figcaption>Top-10% wealth share vs. 10-year real bond prices</figcaption>
+        </figure>
+      </div></div></div>
+    </article>
+  </section>
+
+  <section id="working">
+    <div class="section-head">
+      <h2>Working Papers</h2>
+      <button class="toggle-all" type="button">Show all abstracts</button>
+    </div>
+
+    <article class="paper" id="inflation-real-assets">
+      <h3><a href="https://www.nber.org/papers/w26740">Inflation and the Price of Real Assets</a></h3>
+      <p class="authors">with Monika Piazzesi, Ciaran Rogers and Martin Schneider</p>
+      <p class="venue"><span class="status">R&amp;R,</span> Review of Economic Studies</p>
+      <div class="actions">
+        <button class="abs-btn" type="button">Abstract</button>
+        <a class="chip" href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=3535476">SSRN</a>
+        <a class="chip" href="https://www.nber.org/papers/w26740">NBER WP</a>
+      </div>
+      <div class="panel"><div class="inner"><div class="panel-body">
+        <p class="abstract">In the 1970s, U.S. asset markets witnessed (i) a 25% dip in the ratio of aggregate household wealth relative to GDP and (ii) negative comovement of house and stock prices that drove a 20% portfolio shift out of equity into real estate. This study uses an overlapping generations model with uninsurable nominal risk to quantify the role of structural change in these events. We attribute the dip in wealth to the entry of baby boomers into asset markets, and to the erosion of bond portfolios by surprise inflation, both of which lowered the overall propensity to save. We also show that the Great Inflation led to a portfolio shift by making housing more attractive than equity. Disagreement about inflation across age groups matters for the size of tax effects, the volume of nominal credit, and the price of housing as collateral.</p>
+        <figure>
+          <button type="button"><img src="figures/inflation-real-assets.png" alt="Line chart of net worth, housing, equity and net nominal assets relative to GDP, 1952 to 2016, with three trading periods shaded in yellow" loading="lazy"></button>
+          <figcaption>Aggregate wealth components (market value) relative to GDP, 1952–2016</figcaption>
+        </figure>
+      </div></div></div>
+    </article>
+
+    <article class="paper" id="what-does-it-take">
+      <h3><a href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=5568702">What Does It Take? Quantifying Cross-Country Transfers in the Eurozone</a></h3>
+      <p class="authors">with YiLi Chien, Zhengyang Jiang and Hanno Lustig</p>
+      <div class="actions">
+        <button class="abs-btn" type="button">Abstract</button>
+        <a class="chip" href="https://matteoleombroni.github.io/Files/WhateverItTakes.pdf">PDF</a>
+        <a class="chip" href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=5568702">SSRN</a>
+        <a class="chip" href="https://www.nber.org/papers/w34311">NBER WP</a>
+        <a class="chip" href="https://www.nber.org/sites/default/files/2025-12/jan26.pdf">NBER Digest</a>
+      </div>
+      <p class="note">Conferences: NBER Spring IFM, SFS, WFA, Texas A&amp;M Young Finance Scholars Consortium, CEBRA, Rome Junior Finance, SED, IMF, EFA</p>
+      <div class="panel"><div class="inner"><div class="panel-body">
+        <p class="abstract">We compute the cross-country transfers that result from unconventional monetary policy in the Eurozone. The ECB funds the expansion of its aggregate balance sheet mostly by issuing bank reserves and cash in core countries. The national central banks (NCBs) in periphery countries then borrow from the core NCBs at below-market rates to fund the asset purchases and bank lending. In addition, NCBs in the periphery lend more to their own banks at below-market rates. To compute the cross-country transfers, we compare the resulting cross-country distribution of NCB income to a counterfactual scenario without the ECB and without non-marketable intra-Eurozone debt. We document significant and persistent transfers from the core to the periphery.</p>
+        <figure>
+          <button type="button"><img src="figures/what-does-it-take.png" alt="Four panels comparing actual and counterfactual cumulative net income of the German, Italian, French and Spanish central banks, 2004 to 2023" loading="lazy"></button>
+          <figcaption>Cumulative net income of national central banks: actual vs. counterfactual</figcaption>
+        </figure>
+      </div></div></div>
+    </article>
+
+    <article class="paper" id="liquidity-promises-qe">
+      <h3><a href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=5943814">The Liquidity Promises of QE</a></h3>
+      <p class="authors">with Felix Corell, Fédéric Holm-Hadulla, Lira Mota and Melina Papoutsi</p>
+      <div class="actions">
+        <button class="abs-btn" type="button">Abstract</button>
+        <a class="chip" href="https://matteoleombroni.github.io/Files/qe_liquid.pdf">PDF</a>
+        <a class="chip" href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=5943814">SSRN</a>
+      </div>
+      <p class="note">Supersedes <a href="https://matteoleombroni.github.io/Files/MonPolBonds.pdf">Heterogeneous Intermediaries in the Transmission of Central Bank Corporate Bond Purchases</a> (with Fédéric Holm-Hadulla).<br>
+      Conferences: NBER SI Capital Markets and the Economy, AFA, BoE Monetary Policy, FIRS, MFA, ECB, Texas Finance Festival, EFA, Stockholm BI-SHoF, Gerzensee-SFI Conference on Financial Intermediation, Oxford Saïd - VU SBE</p>
+      <div class="panel"><div class="inner"><div class="panel-body">
+        <p class="abstract">Quantitative easing (QE) fundamentally changes the liquidity of eligible assets by providing implicit liquidity insurance, as the central bank absorbs bond supply under both normal and stressed conditions. Using granular portfolio data from the euro area, we show that the effectiveness of the ECB's corporate QE operates mainly through an increase in demand for eligible bonds by investors that particularly value this additional liquidity. Mutual funds—typically considered elastic investors—rebalanced toward eligible bonds rather than selling them to the central bank. As a result, a larger mutual fund presence in bond holdings amplified the effects of QE on yields. Consistent with the liquidity channel, QE affected prices primarily by widening the CDS–bond basis spread rather than by reducing default premia. Our findings provide new evidence that investors differ in how they value the contingent liquidity commitments embedded in QE, and that this heterogeneity plays a central role in shaping the transmission of monetary policy.</p>
+        <figure>
+          <button type="button"><img src="figures/liquidity-promises-qe.png" alt="Two panels showing credit spreads and the inverse CDS-bond basis around the ECB's CSPP and PEPP announcements" loading="lazy"></button>
+          <figcaption>Credit spreads and convenience yields around the ECB's CSPP and PEPP announcements</figcaption>
+        </figure>
+      </div></div></div>
+    </article>
+
+    <article class="paper" id="qe-regulation-structure">
+      <h3><a href="https://matteoleombroni.github.io/Files/qe_insurance_structure.pdf">The Effect of QE and Regulation on the Structure of the Financial System</a></h3>
+      <p class="authors">with Stelios Kotronis, Ciaran Rogers and Philippe Van Der Beck</p>
+      <div class="actions">
+        <button class="abs-btn" type="button">Abstract</button>
+        <a class="chip" href="https://matteoleombroni.github.io/Files/qe_insurance_structure.pdf">PDF</a>
+        <!-- TODO: add SSRN link: <a class="chip" href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=XXXXXXX">SSRN</a> -->
+      </div>
+      <p class="note">Conferences: NBER Spring Meeting New Development in Long-Term Asset Management, Bocconi Asset Pricing Conference, BoE, EFA, Isenberg Finance Conference, ACPR Banque de France and Sciences Po, SED</p>
+      <div class="panel"><div class="inner"><div class="panel-body">
+        <p class="abstract">Insurance companies' ownership share of long-term Euro area government bonds fell by 15 percentage points between 2016 and 2024, despite policy and regulatory forces that should have increased their bond demand. Using confidential EIOPA supervisory data on the universe of Euro area insurers, we show that insurers' long-run bond demand is primarily liability-driven rather than driven by active portfolio rebalancing. Both the scale and composition of liabilities matter: net inflows determine the size of insurers' balance sheets, while the products they sell determine how much of those balance sheets is invested in bonds. Low long-term interest rates and risk-based capital regulation reduced inflows and shifted insurers away from products with long-term guarantees, which are backed predominantly by bonds. Our results highlight how, over longer horizons, monetary policy and regulation reshape the financial system not only by changing how intermediaries allocate their portfolios, but by changing the size and composition of intermediaries' liabilities.</p>
+        <figure>
+          <button type="button"><img src="figures/qe-regulation-structure.png" alt="Bar charts of insurers' holding share of government and corporate bonds by maturity, 2016 vs. 2023" loading="lazy"></button>
+          <figcaption>Insurers' holding share of outstanding bonds by maturity, 2016 vs. 2023</figcaption>
+        </figure>
+      </div></div></div>
+    </article>
+
+    <article class="paper" id="risk-return-gov-bonds">
+      <h3><a href="https://matteoleombroni.github.io/Files/RiskReturnGovBonds_LeombroniPfluegerSunderam.pdf">Risk and Return in Government Bonds</a></h3>
+      <p class="authors">with Carolin Pflueger and Adi Sunderam</p>
+      <div class="actions">
+        <button class="abs-btn" type="button">Abstract</button>
+        <a class="chip" href="https://matteoleombroni.github.io/Files/RiskReturnGovBonds_LeombroniPfluegerSunderam.pdf">PDF</a>
+        <a class="chip" href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=7059018">SSRN</a>
+      </div>
+      <p class="note">Conferences: NBER SI Asset Pricing, Texas Macroeconomics conference, Stanford SITE</p>
+      <div class="panel"><div class="inner"><div class="panel-body">
+        <p class="abstract">As the risks of government bonds vary over time, does the compensation that investors require for holding them change? While realized excess returns show little relation to bond risk, we find that subjective expected excess returns constructed from professional forecasts of future long-term yields are tightly linked to bonds' stock market betas, consistent with a CAPM-style relation. In a U.S. month-by-maturity panel from 1988–2024, the correlation of subjective excess returns with rolling bond–stock betas is 66%. The estimated market price of risk is comparable to the equity premium and stable when controlling for time and maturity fixed effects. Realized excess returns are predicted by subjective excess returns, but this predictability is driven by higher-frequency variation and not by betas. Similar results hold in an international panel of developed countries from 1989–2024. The change in betas from positive to negative accounts for half of the decline in long-term U.S. Treasury yields from the 1980s to the 2010s and implies a negative term premium as early as 2001. During quantitative easing episodes, the price of bond risk declines, suggesting an increased investor willingness to bear risk.</p>
+        <figure>
+          <button type="button"><img src="figures/risk-return-gov-bonds.png" alt="Two scatter plots against the 5-year bond-stock beta: realized excess returns show no relation, subjective expected excess returns slope upward" loading="lazy"></button>
+          <figcaption>Realized vs. subjective expected bond excess returns against bond–stock betas</figcaption>
+        </figure>
+      </div></div></div>
+    </article>
+
+    <article class="paper" id="winners-losers">
+      <h3><a href="https://matteoleombroni.github.io/Files/Winners_Losers.pdf">Winners and Losers When Interest Rates Change</a></h3>
+      <p class="authors">with Daniel Greenwald, Hanno Lustig and Stijn Van Nieuwerburgh</p>
+      <div class="actions">
+        <button class="abs-btn" type="button">Abstract</button>
+        <a class="chip" href="https://matteoleombroni.github.io/Files/Winners_Losers.pdf">PDF</a>
+        <a class="chip" href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=6240378">SSRN</a>
+      </div>
+      <div class="panel"><div class="inner"><div class="panel-body">
+        <p class="abstract">Real rates declined by more than 4% points between 1980 and 2023 driving large capital gains on long-lived assets. Households that rely on their financial wealth to finance future consumption need more wealth to fund the same consumption plan after rates have declined. To be hedged against interest rate risk, households need to match the duration of their portfolio to the duration of a claim on their future consumption in excess of labor income. We find that young and poor US households were worse off when rates declined, because they had too little duration in their portfolios. Older and wealthy US households were better off. We characterize the compensated financial wealth distribution implied by full hedging and compare it to the actual one.</p>
+        <figure>
+          <button type="button"><img src="figures/winners-losers.png" alt="Two scatter plots of compensated vs. original financial wealth, by age and by wealth, lying above the 45-degree line" loading="lazy"></button>
+          <figcaption>Compensated vs. original financial wealth, by age and by wealth</figcaption>
+        </figure>
+      </div></div></div>
+    </article>
+
+    <article class="paper" id="convenience-yield">
+      <h3><a href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=4656963">Drivers of Convenience Yield</a></h3>
+      <p class="authors">with Felix Corell, Fédéric Holm-Hadulla, Lira Mota and Melina Papoutsi</p>
+      <div class="actions">
+        <button class="abs-btn" type="button">Abstract</button>
+        <a class="chip" href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=4656963">SSRN</a>
+      </div>
+      <div class="panel"><div class="inner"><div class="panel-body no-fig">
+        <p class="abstract">Financial assets are valued not only for their cash flows but also for other attributes, which give rise to convenience yields—yield spreads between assets with similar cash flows but that provide different services to investors. Although important in explaining bond valuation, convenience yields are reduced-form measures that are silent about the relative contribution of each underlying service. Using comprehensive bond characteristics and portfolio holdings data for the eurozone bond market, we estimate premia for three key services—liquidity, regulatory capital benefits, and collateral value—and decompose European AAA sovereign bond convenience yields into these components. We find that regulatory capital benefits, valued particularly by insurance companies and pension funds, have been the dominant driver of convenience yields over the past decade. The regulatory value of AAA sovereign bonds reduces governments' cost of capital by 18 bps, economically large relative to their average yield of 90 bps. We also show that policy-induced shocks to these services significantly impact asset prices and portfolio allocations.</p>
+      </div></div></div>
+    </article>
+  </section>
+
+  <section id="resting">
+    <div class="section-head">
+      <h2>Resting Working Paper</h2>
+    </div>
+
+    <article class="paper" id="household-portfolios">
+      <h3><a href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=3961115">Household Portfolios, Monetary Policy and Asset Prices</a></h3>
+      <p class="authors">with Ciaran Rogers</p>
+      <div class="actions">
+        <button class="abs-btn" type="button">Abstract</button>
+        <a class="chip" href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=3961115">SSRN</a>
+      </div>
+      <div class="panel"><div class="inner"><div class="panel-body no-fig">
+        <!-- TODO: draft summary, replace with the exact abstract from SSRN -->
+        <p class="abstract">We study the role of the household portfolio rebalancing channel for the aggregate and redistributive effects of monetary policy. The transmission of monetary policy works not only through the usual income and substitution motives, but also through an endogenous portfolio rebalancing effect which generates changes in equilibrium asset prices and a subsequent wealth effect on consumption. To jointly study these effects, we introduce a heterogeneous-household life-cycle model with multiple assets and combine it with an incomplete-markets asset pricing framework. Monetary policy shocks lower the expected return on safe assets, which in equilibrium prompts a portfolio rebalancing toward riskier assets, raising their prices and household wealth. The positive wealth effect on consumption is offset by an increase in saving induced by the lower expected return on household portfolios, and the strength of these two forces varies with age: younger cohorts increase consumption by more than older cohorts.</p>
+      </div></div></div>
+    </article>
+  </section>
+
+  <footer>
+    Matteo Leombroni · Carroll School of Management, Boston College · Last updated October 2026
+  </footer>
+</div>
+
+<dialog class="lightbox" aria-label="Enlarged figure">
+  <img alt="">
+  <p></p>
+</dialog>
+
+<script>
+  // Abstract toggles: each button opens the panel that follows it in the same paper.
+  const chevron = '<svg viewBox="0 0 12 12" aria-hidden="true"><path d="M2 4l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.6"/></svg>';
+  function setOpen(paper, open) {
+    const btn = paper.querySelector('.abs-btn');
+    const panel = paper.querySelector('.panel');
+    if (!btn || !panel) return;
+    btn.setAttribute('aria-expanded', open);
+    panel.classList.toggle('open', open);
+    panel.querySelector('.inner').inert = !open;
+  }
+  document.querySelectorAll('.paper').forEach((paper, i) => {
+    const btn = paper.querySelector('.abs-btn');
+    const panel = paper.querySelector('.panel');
+    if (!btn || !panel) return;
+    panel.id = panel.id || 'panel-' + i;
+    btn.setAttribute('aria-controls', panel.id);
+    btn.insertAdjacentHTML('beforeend', chevron);
+    setOpen(paper, false);
+    btn.addEventListener('click', () => {
+      const open = btn.getAttribute('aria-expanded') !== 'true';
+      setOpen(paper, open);
+      if (open) history.replaceState(null, '', '#' + paper.id);
+    });
+  });
+
+  // "Show all abstracts" per section
+  document.querySelectorAll('.toggle-all').forEach(t => {
+    t.addEventListener('click', () => {
+      const papers = t.closest('section').querySelectorAll('.paper');
+      const open = t.textContent.startsWith('Show');
+      papers.forEach(p => setOpen(p, open));
+      t.textContent = open ? 'Hide all abstracts' : 'Show all abstracts';
+    });
+  });
+
+  // Deep link: matteoleombroni.com/#paper-id opens that abstract
+  function openFromHash() {
+    const target = location.hash && document.getElementById(location.hash.slice(1));
+    if (target && target.classList.contains('paper')) { setOpen(target, true); target.scrollIntoView(); }
+  }
+  openFromHash();
+  window.addEventListener('hashchange', openFromHash);
+
+  // Click a figure to enlarge it
+  const box = document.querySelector('dialog.lightbox');
+  document.querySelectorAll('figure button').forEach(b => {
+    b.addEventListener('click', () => {
+      const img = b.querySelector('img');
+      box.querySelector('img').src = img.src;
+      box.querySelector('img').alt = img.alt;
+      box.querySelector('p').textContent = b.closest('figure').querySelector('figcaption')?.textContent || '';
+      box.showModal();
+    });
+  });
+  box.addEventListener('click', () => box.close());
+</script>
+</body>
+</html>
