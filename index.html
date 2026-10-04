@@ -30,7 +30,7 @@
   }
   a { color: var(--accent); text-decoration: none; }
   a:hover { text-decoration: underline; text-underline-offset: 3px; }
-  .wrap { max-width: 1180px; margin: 0 auto; padding: 0 24px; }
+  .wrap { max-width: 1360px; margin: 0 auto; padding: 0 24px; }
 
   /* ---------- Header ---------- */
   header.hero {
@@ -65,7 +65,7 @@
   .paper { padding: 10px 0; scroll-margin-top: 16px; }
   body { counter-reset: paper; }
   .paper { counter-increment: paper; }
-  .head::before { content: counter(paper) ") "; font-weight: 700; font-size: 16.5px; }
+  .head::before { content: counter(paper) ") "; font-weight: 700; font-size: 16.5px; color: var(--accent); }
   .head { margin: 0; line-height: 1.35; }
   .paper h3 { display: inline; font-size: 16.5px; font-weight: 600; margin: 0; }
   .paper h3 a { color: var(--accent); font-weight: 700; }
