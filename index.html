@@ -37,7 +37,7 @@
 
   /* ---------- Header ---------- */
   header.hero {
-    display: grid; grid-template-columns: 1fr 360px; gap: 48px; align-items: center;
+    display: grid; grid-template-columns: 1fr 480px; gap: 40px; align-items: center;
     padding: 64px 0 48px; border-bottom: 1px solid var(--rule);
   }
   .hero h1 { font-size: 40px; line-height: 1.1; font-weight: 600; margin: 0 0 14px; letter-spacing: -.01em; }
@@ -65,27 +65,27 @@
   .toggle-all:hover { color: var(--accent); }
 
   /* ---------- Paper entry ---------- */
-  .paper { padding: 22px 0; border-bottom: 1px solid var(--rule); scroll-margin-top: 16px; }
+  .paper { padding: 18px 0; border-bottom: 1px solid var(--rule); scroll-margin-top: 16px; }
   .paper:last-child { border-bottom: none; }
-  .paper h3 { font-size: 18px; font-weight: 600; line-height: 1.3; margin: 0 0 4px; }
+  .paper h3 { font-size: 16.5px; font-weight: 600; line-height: 1.3; margin: 0 0 4px; }
   .paper h3 a { color: var(--text); }
   .paper h3 a:hover { color: var(--accent); }
-  .authors { color: var(--muted); margin: 0; }
-  .venue { margin: 2px 0 0; font-style: italic; }
-  .venue .status { font-style: normal; }
-  .note { font-size: 14px; color: var(--muted); margin: 6px 0 0; }
+  .authors { color: var(--muted); margin: 0; font-size: 14.5px; }
+  .venue { margin: 2px 0 0; font-size: 14.5px; font-style: italic; font-weight: 600; }
+  .venue .status { font-style: normal; font-weight: 400; }
+  .note { font-size: 13px; color: var(--muted); margin: 6px 0 0; }
 
-  .actions { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin-top: 12px; font-family: var(--sans); font-size: 12px; }
+  .actions { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; margin-top: 10px; font-family: var(--sans); font-size: 11px; }
   .abs-btn {
     display: inline-flex; align-items: center; gap: 6px; cursor: pointer;
     font: inherit; font-weight: 500; color: var(--accent); background: var(--accent-soft);
-    border: 1px solid transparent; border-radius: 6px; padding: 5px 11px;
+    border: 1px solid transparent; border-radius: 6px; padding: 3px 9px;
   }
   .abs-btn:hover { border-color: var(--accent); }
-  .abs-btn svg { width: 12px; height: 12px; transition: transform .25s ease; }
+  .abs-btn svg { width: 10px; height: 10px; transition: transform .25s ease; }
   .abs-btn[aria-expanded="true"] svg { transform: rotate(180deg); }
   .chip {
-    color: var(--chip-text); background: var(--chip-bg); border-radius: 6px; padding: 5px 11px; font-weight: 500;
+    color: var(--chip-text); background: var(--chip-bg); border-radius: 6px; padding: 3px 9px; font-weight: 500;
   }
   .chip:hover { color: var(--accent); text-decoration: none; }
 
@@ -99,7 +99,7 @@
     border: 1px solid var(--rule); border-radius: 8px; box-shadow: var(--shadow);
   }
   .panel-body.no-fig { grid-template-columns: 1fr; }
-  .abstract { font-size: 15px; line-height: 1.6; margin: 0; text-align: justify; hyphens: auto; }
+  .abstract { font-size: 14px; line-height: 1.6; margin: 0; text-align: justify; hyphens: auto; }
   figure { margin: 0; }
   figure button { display: block; width: 100%; padding: 0; border: none; background: #fff; cursor: zoom-in; border-radius: 4px; }
   figure img { display: block; width: 100%; height: auto; border-radius: 4px; }
@@ -121,7 +121,7 @@
     body { font-size: 15.5px; }
     .wrap { padding: 0 16px; }
     header.hero { grid-template-columns: 1fr; gap: 24px; padding: 36px 0 32px; }
-    .hero img { order: -1; max-width: 420px; }
+    .hero img { order: -1; max-width: 100%; }
     .hero h1 { font-size: 32px; }
     .panel-body { grid-template-columns: 1fr; padding: 16px; gap: 18px; }
     figure { max-width: 400px; margin: 0 auto; }
