@@ -62,7 +62,7 @@
   .toggle-all:hover { color: var(--accent); }
 
   /* ---------- Paper entry ---------- */
-  .paper { padding: 10px 0; scroll-margin-top: 16px; }
+  .paper { padding: 12px 0; scroll-margin-top: 16px; }
   body { counter-reset: paper; }
   .paper { counter-increment: paper; }
   .head::before { content: counter(paper) ") "; font-size: 14.5px; color: var(--accent); }
@@ -70,23 +70,21 @@
   .paper h3 { display: inline; font-size: 14.5px; font-weight: 400; margin: 0; }
   .paper h3 a { color: var(--accent); text-decoration: underline; text-underline-offset: 2px; }
   .authors { font-size: 14.5px; }
-  .note { font-size: 12px; color: var(--muted); margin: 4px 0 0; line-height: 1.45; }
-
-  .actions { display: flex; flex-wrap: wrap; align-items: center; gap: 5px; margin-top: 5px; font-family: var(--sans); font-size: 11px; }
-  .venue { font-family: var(--serif); font-size: 14px; font-style: italic; font-weight: 700; margin-right: 6px; }
+  .venue { font-size: 14.5px; font-style: italic; font-weight: 700; }
   .venue .status { font-style: normal; font-weight: 400; }
-  .abs-btn {
-    display: inline-flex; align-items: center; gap: 6px; cursor: pointer;
-    font: inherit; font-weight: 500; color: var(--chip-text); background: var(--chip-bg);
-    border: 1px solid transparent; border-radius: 5px; padding: 2px 7px; line-height: inherit;
+  .note { font-size: 12px; margin: 3px 0 0; line-height: 1.45; }
+
+  /* Links under each paper, old-site style: [Abstract] [PDF] [SSRN] */
+  .actions { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 10px; margin-top: 3px; font-size: 13.5px; }
+  .abs-btn, .chip {
+    font: inherit; color: var(--accent); background: none; border: none; padding: 0; cursor: pointer;
+    text-decoration: underline; text-underline-offset: 2px;
   }
-  .abs-btn:hover { color: var(--accent); }
-  .abs-btn svg { width: 8px; height: 8px; transition: transform .25s ease; }
+  .abs-btn::before, .chip::before { content: "["; display: inline-block; text-decoration: none; color: var(--text); }
+  .abs-btn::after, .chip::after { content: "]"; display: inline-block; text-decoration: none; color: var(--text); }
+  .abs-btn svg { width: 9px; height: 9px; margin-left: 3px; vertical-align: middle; transition: transform .25s ease; }
   .abs-btn[aria-expanded="true"] svg { transform: rotate(180deg); }
-  .chip {
-    color: var(--chip-text); background: var(--chip-bg); border: 1px solid transparent; border-radius: 5px; padding: 2px 7px; font-weight: 500;
-  }
-  .chip:hover { color: var(--accent); text-decoration: none; }
+  .abs-btn:hover, .chip:hover { color: #a80c0c; }
 
   /* Expanding panel: abstract left, key figure right */
   .panel { display: grid; grid-template-rows: 0fr; transition: grid-template-rows .3s ease; }
@@ -160,9 +158,8 @@
     </div>
 
     <article class="paper" id="central-bank-communication">
-      <div class="head"><h3><a href="https://www.sciencedirect.com/science/article/abs/pii/S0304405X21001665">Central Bank Communication and the Yield Curve</a></h3> <span class="authors">(with Andrea Vedolin, Paul Whelan and Gyuri Venter)</span></div>
+      <div class="head"><h3><a href="https://www.sciencedirect.com/science/article/abs/pii/S0304405X21001665">Central Bank Communication and the Yield Curve</a></h3> <span class="authors">(w/ Andrea Vedolin, Paul Whelan and Gyuri Venter)</span>, <span class="venue">Journal of Financial Economics <span class="status">(2021)</span></span></div>
       <div class="actions">
-        <span class="venue">Journal of Financial Economics <span class="status">(2021)</span></span>
         <button class="abs-btn" type="button">Abstract</button>
         <a class="chip" href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=2873091">SSRN</a>
         <a class="chip" href="https://www.sciencedirect.com/science/article/abs/pii/S0304405X21001665">JFE</a>
@@ -173,9 +170,8 @@
     </article>
 
     <article class="paper" id="wealth-inequality">
-      <div class="head"><h3><a href="https://matteoleombroni.github.io/Files/Duration.pdf">Financial and Total Wealth Inequality with Declining Interest Rates</a></h3> <span class="authors">(with Dan Greenwald, Hanno Lustig and Stijn Van Nieuwerburgh)</span></div>
+      <div class="head"><h3><a href="https://matteoleombroni.github.io/Files/Duration.pdf">Financial and Total Wealth Inequality with Declining Interest Rates</a></h3> <span class="authors">(w/ Dan Greenwald, Hanno Lustig and Stijn Van Nieuwerburgh)</span>, <span class="venue"><span class="status">Accepted,</span> Review of Economic Studies</span></div>
       <div class="actions">
-        <span class="venue"><span class="status">Accepted,</span> Review of Economic Studies</span>
         <button class="abs-btn" type="button">Abstract</button>
         <a class="chip" href="https://matteoleombroni.github.io/Files/Duration.pdf">PDF</a>
         <a class="chip" href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=3789220">SSRN</a>
@@ -197,9 +193,8 @@
     </div>
 
     <article class="paper" id="inflation-real-assets">
-      <div class="head"><h3><a href="https://www.nber.org/papers/w26740">Inflation and the Price of Real Assets</a></h3> <span class="authors">(with Monika Piazzesi, Ciaran Rogers and Martin Schneider)</span></div>
+      <div class="head"><h3><a href="https://www.nber.org/papers/w26740">Inflation and the Price of Real Assets</a></h3> <span class="authors">(w/ Monika Piazzesi, Ciaran Rogers and Martin Schneider)</span>, <span class="venue"><span class="status">R&amp;R,</span> Review of Economic Studies</span></div>
       <div class="actions">
-        <span class="venue"><span class="status">R&amp;R,</span> Review of Economic Studies</span>
         <button class="abs-btn" type="button">Abstract</button>
         <a class="chip" href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=3535476">SSRN</a>
         <a class="chip" href="https://www.nber.org/papers/w26740">NBER WP</a>
@@ -214,7 +209,7 @@
     </article>
 
     <article class="paper" id="what-does-it-take">
-      <div class="head"><h3><a href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=5568702">What Does It Take? Quantifying Cross-Country Transfers in the Eurozone</a></h3> <span class="authors">(with YiLi Chien, Zhengyang Jiang and Hanno Lustig)</span></div>
+      <div class="head"><h3><a href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=5568702">What Does It Take? Quantifying Cross-Country Transfers in the Eurozone</a></h3> <span class="authors">(w/ YiLi Chien, Zhengyang Jiang and Hanno Lustig)</span></div>
       <div class="actions">
         <button class="abs-btn" type="button">Abstract</button>
         <a class="chip" href="https://matteoleombroni.github.io/Files/WhateverItTakes.pdf">PDF</a>
@@ -233,7 +228,7 @@
     </article>
 
     <article class="paper" id="liquidity-promises-qe">
-      <div class="head"><h3><a href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=5943814">The Liquidity Promises of QE</a></h3> <span class="authors">(with Felix Corell, Fédéric Holm-Hadulla, Lira Mota and Melina Papoutsi)</span></div>
+      <div class="head"><h3><a href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=5943814">The Liquidity Promises of QE</a></h3> <span class="authors">(w/ Felix Corell, Fédéric Holm-Hadulla, Lira Mota and Melina Papoutsi)</span></div>
       <div class="actions">
         <button class="abs-btn" type="button">Abstract</button>
         <a class="chip" href="https://matteoleombroni.github.io/Files/qe_liquid.pdf">PDF</a>
@@ -251,7 +246,7 @@
     </article>
 
     <article class="paper" id="qe-regulation-structure">
-      <div class="head"><h3><a href="https://matteoleombroni.github.io/Files/qe_insurance_structure.pdf">The Effect of QE and Regulation on the Structure of the Financial System</a></h3> <span class="authors">(with Stelios Kotronis, Ciaran Rogers and Philippe Van Der Beck)</span></div>
+      <div class="head"><h3><a href="https://matteoleombroni.github.io/Files/qe_insurance_structure.pdf">The Effect of QE and Regulation on the Structure of the Financial System</a></h3> <span class="authors">(w/ Stelios Kotronis, Ciaran Rogers and Philippe Van Der Beck)</span></div>
       <div class="actions">
         <button class="abs-btn" type="button">Abstract</button>
         <a class="chip" href="https://matteoleombroni.github.io/Files/qe_insurance_structure.pdf">PDF</a>
@@ -268,7 +263,7 @@
     </article>
 
     <article class="paper" id="risk-return-gov-bonds">
-      <div class="head"><h3><a href="https://matteoleombroni.github.io/Files/RiskReturnGovBonds_LeombroniPfluegerSunderam.pdf">Risk and Return in Government Bonds</a></h3> <span class="authors">(with Carolin Pflueger and Adi Sunderam)</span></div>
+      <div class="head"><h3><a href="https://matteoleombroni.github.io/Files/RiskReturnGovBonds_LeombroniPfluegerSunderam.pdf">Risk and Return in Government Bonds</a></h3> <span class="authors">(w/ Carolin Pflueger and Adi Sunderam)</span></div>
       <div class="actions">
         <button class="abs-btn" type="button">Abstract</button>
         <a class="chip" href="https://matteoleombroni.github.io/Files/RiskReturnGovBonds_LeombroniPfluegerSunderam.pdf">PDF</a>
@@ -285,7 +280,7 @@
     </article>
 
     <article class="paper" id="winners-losers">
-      <div class="head"><h3><a href="https://matteoleombroni.github.io/Files/Winners_Losers.pdf">Winners and Losers When Interest Rates Change</a></h3> <span class="authors">(with Daniel Greenwald, Hanno Lustig and Stijn Van Nieuwerburgh)</span></div>
+      <div class="head"><h3><a href="https://matteoleombroni.github.io/Files/Winners_Losers.pdf">Winners and Losers When Interest Rates Change</a></h3> <span class="authors">(w/ Daniel Greenwald, Hanno Lustig and Stijn Van Nieuwerburgh)</span></div>
       <div class="actions">
         <button class="abs-btn" type="button">Abstract</button>
         <a class="chip" href="https://matteoleombroni.github.io/Files/Winners_Losers.pdf">PDF</a>
@@ -301,7 +296,7 @@
     </article>
 
     <article class="paper" id="convenience-yield">
-      <div class="head"><h3><a href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=4656963">Drivers of Convenience Yield</a></h3> <span class="authors">(with Felix Corell, Fédéric Holm-Hadulla, Lira Mota and Melina Papoutsi)</span></div>
+      <div class="head"><h3><a href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=4656963">Drivers of Convenience Yield</a></h3> <span class="authors">(w/ Felix Corell, Fédéric Holm-Hadulla, Lira Mota and Melina Papoutsi)</span></div>
       <div class="actions">
         <button class="abs-btn" type="button">Abstract</button>
         <a class="chip" href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=4656963">SSRN</a>
@@ -318,7 +313,7 @@
     </div>
 
     <article class="paper" id="household-portfolios">
-      <div class="head"><h3><a href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=3961115">Household Portfolios, Monetary Policy and Asset Prices</a></h3> <span class="authors">(with Ciaran Rogers)</span></div>
+      <div class="head"><h3><a href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=3961115">Household Portfolios, Monetary Policy and Asset Prices</a></h3> <span class="authors">(w/ Ciaran Rogers)</span></div>
       <div class="actions">
         <button class="abs-btn" type="button">Abstract</button>
         <a class="chip" href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=3961115">SSRN</a>
